@@ -96,7 +96,7 @@ public class HttpServer {
     }
 
     private void getStaticResource(String requestURI, PrintWriter printWriter, Socket clientSocket) throws IOException {
-        Path file = Paths.get("src/main/resources/web" + requestURI);
+        Path file = Paths.get("src/main/resources" + requestURI);
         String resource = "HTTP/1.1 200 OK\r\n";
         if (requestURI.contains(".html") || requestURI.equals("/")){
             requestURI = "index.html";
