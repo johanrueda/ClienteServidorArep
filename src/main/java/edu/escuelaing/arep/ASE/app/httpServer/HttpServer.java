@@ -1,13 +1,32 @@
 package edu.escuelaing.arep.ASE.app.httpServer;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
 import java.net.*;
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class HttpServer {
     private static boolean running;
+    private dataBase connect= null;
+    private Map<String,String> request;
+    private int puerto = 0;
+
+    public  HttpServer(){
+        request = new HashMap<>();
+    }
 
 
-    public static void main(String[] args) throws IOException {
+
+
+    public  void startServer() throws IOException {
         ServerSocket serverSocket = null;
         try {
             serverSocket = new ServerSocket(getPort());
@@ -25,18 +44,37 @@ public class HttpServer {
                 System.err.println("Accept failed.");
                 System.exit(1);
             }
-            PrintWriter out = new PrintWriter(
-                    clientSocket.getOutputStream(), true);
-            BufferedReader in = new BufferedReader(
-                    new InputStreamReader(clientSocket.getInputStream()));
-            String inputLine, outputLine;
-            while ((inputLine = in.readLine()) != null) {
-                System.out.println("Recibí: " + inputLine);
-                if (!in.ready()) {
-                    break;
-                }
+            processRequest(clientSocket);
+            clientSocket.close();
+        }
+    }
+
+
+
+    private void processRequest(Socket clientSocket) throws IOException {
+        BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+        String inputLine;
+        boolean lineReady = true;
+        Request req = null;
+        while ((inputLine = in.readLine()) != null) {
+            if(lineReady){
+                req = new Request(inputLine);
+                lineReady = false;
             }
-            outputLine = "HTTP/1.1 200 OK\r\n"
+            if (!in.ready()) {
+                break;
+            }
+        }
+        if (req!=null){
+            createResponse(req, new PrintWriter(clientSocket.getOutputStream(), true), clientSocket);
+        }
+        in.close();
+
+    }
+
+    private void createResponse(Request req, PrintWriter printWriter, Socket clientSocket) throws IOException {
+        if(req.getRequestURI().startsWith("/dataBase")) {
+            String db = "HTTP/1.1 200 OK\r\n"
                     + "Content-Type: text/html\r\n"
                     + "\r\n"
                     + "<!DOCTYPE html>\n"
@@ -48,13 +86,61 @@ public class HttpServer {
                     + "<body>\n"
                     + "<h1>Mi propio mensaje</h1>\n"
                     + "</body>\n"
-                    + "</html>\n" + inputLine;
-            out.println(outputLine);
-            out.close();
-            in.close();
-            clientSocket.close();
+                    + "</html>\n";
+            db += getDataBase();
+            printWriter.println(db);
+        }else{
+            getStaticResource(req.getRequestURI(),printWriter,clientSocket);
         }
-        serverSocket.close();
+        printWriter.close();
+    }
+
+    private void getStaticResource(String requestURI, PrintWriter printWriter, Socket clientSocket) throws IOException {
+        Path file = Paths.get("src/main/resources/web" + requestURI);
+        String resource = "HTTP/1.1 200 OK\r\n";
+        if (requestURI.contains(".html") || requestURI.equals("/")){
+            requestURI = "index.html";
+            resource += ("Content-Type: text/html\r\n"
+                    + "\r\n"
+                    + "<!DOCTYPE html>\n");
+        }else if (requestURI.contains(".jpg")) {
+            getImage(requestURI, clientSocket.getOutputStream());
+        }
+        try (InputStream in = Files.newInputStream(file);
+             BufferedReader reader = new BufferedReader(new InputStreamReader(in)))
+        {
+            printWriter.println(resource);
+            String line = null;
+            while ((line = reader.readLine()) != null) {
+                printWriter.println(line);
+            }
+        } catch (IOException ex) {
+            Logger.getLogger(HttpServer.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    private void getImage(String requestURI, OutputStream outputStream) {
+        File file = new File("src/main/resources" + requestURI);
+        try {
+            BufferedImage pic = ImageIO.read(file);
+            ByteArrayOutputStream picShow = new ByteArrayOutputStream();
+            DataOutputStream picDraw = new DataOutputStream(outputStream);
+            ImageIO.write (pic, "JPG", picShow);
+            picDraw.writeBytes("HTTP/1.1 200 OK\r\n" + "Content-Type: image/jpg \r\n\r\n");
+            picDraw.write(picShow.toByteArray());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public String getDataBase (){
+        dataBase db = new dataBase();
+        ArrayList<String []> data = db.getTable();
+        String list = "";
+        for (String [] datos : data) {
+            list += datos [0] + ". Nombre : " + datos [1] + "\n";
+        }
+        return list;
     }
 
     static int getPort(){
