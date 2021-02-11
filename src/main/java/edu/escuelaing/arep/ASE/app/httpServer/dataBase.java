@@ -4,9 +4,9 @@ import java.sql.*;
 import java.util.ArrayList;
 
 public class dataBase {
-    private static String url ="jdbc:postgres://npnxrkzsftjibx:1bc234c47dcab7877e820f7f7610189eea358f254785cbdc9e29ec146fec096f@ec2-54-166-114-48.compute-1.amazonaws.com:5432/dbcoe2qnse2i3q";
-    private static String user = "npnxrkzsftjibx";
-    private static String password = "1bc234c47dcab7877e820f7f7610189eea358f254785cbdc9e29ec146fec096f";
+    private static String url ="jdbc:postgres://ec2-100-24-139-146.compute-1.amazonaws.com:5432/d3iic92vv476ra";
+    private static String user = "jgdjyaphxrrrgv";
+    private static String password = "a30be3f4ee4adb660f695bb9a1f91e23cb4e2f271d1b0fddc957f29c2d215729";
     private static Connection connection = null;
 
     public dataBase(){
