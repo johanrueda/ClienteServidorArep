@@ -8,7 +8,7 @@ El framework es una version minima de spark que recibe multiples peticiones.
 
 # Diseño
 
-![](img/diseño.png)
+![](img/diseno.png)
 
 ![](img/pagina.png)
 
