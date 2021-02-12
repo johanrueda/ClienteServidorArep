@@ -131,7 +131,7 @@ public class HttpServer {
     }
 
     private void getImage(String requestURI, OutputStream outputStream) {
-        File file = new File("src/main/resources" + requestURI);
+        File file = new File("src/main/resources/" + requestURI);
         try {
             BufferedImage pic = ImageIO.read(file);
             ByteArrayOutputStream picShow = new ByteArrayOutputStream();
