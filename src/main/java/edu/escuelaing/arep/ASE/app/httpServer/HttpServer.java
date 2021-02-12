@@ -103,7 +103,7 @@ public class HttpServer {
                     + "<title>Base de datos</title>\n"
                     + "</head>\n"
                     + "<body>\n"
-                    + "<h1>Mi propio mensaje</h1>\n"
+                    + "<h1>Tabla base de datos</h1>\n"
                     + "</body>\n"
                     + "</html>\n";
             db += getDataBase();
