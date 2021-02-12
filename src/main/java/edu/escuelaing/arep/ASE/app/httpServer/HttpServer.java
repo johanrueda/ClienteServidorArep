@@ -18,14 +18,7 @@ public class HttpServer {
     private dataBase connect= null;
     private Map<String,String> request;
     private int puerto = 36000;
-
-    public HttpServer() {
-        this.puerto = getPort();
-        request = new HashMap<>();
-    }
-
-
-
+    static PrintWriter printWriter;
 
 
     public  void startServer() {
