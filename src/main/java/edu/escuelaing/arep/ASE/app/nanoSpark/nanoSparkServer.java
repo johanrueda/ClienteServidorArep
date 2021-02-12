@@ -19,11 +19,7 @@ public class nanoSparkServer {
     private Map<String,String> bodyMap = new HashMap();
 
     private nanoSparkServer(){
-        try {
-            hserver.startServer();
-        } catch (IOException e) {
-            Logger.getLogger(nanoSparkServer.class.getName()).log(Level.SEVERE,null,e);
-        }
+        hserver.startServer();
     }
 
     public void get(String path, String body) {

@@ -8,7 +8,7 @@ import static edu.escuelaing.arep.ASE.app.nanoSpark.nanoSparkDemo.*;
 
 public class nanoSpark {
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
         nanoSparkDemo spark = new nanoSparkDemo();
         HttpServer server = new HttpServer();
         server.startServer();
