@@ -1,1 +1,1 @@
-web: java $JAVA_OPTS -cp target/classes:target/dependency/* edu.escuelaing.arep.ASE.app.nanoSpar.nanoSpark
+web: java $JAVA_OPTS -cp target/classes;target/dependency/* edu.escuelaing.arep.ASE.app.nanoSpar.nanoSpark
