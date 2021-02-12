@@ -41,7 +41,7 @@ public class HttpServer {
                     try {
                         Socket clientSocket = null;
                         try {
-                            System.out.println("Listo para recibir en puerto 36000 ...");
+                            System.out.println("Listo para recibir en puerto " + getPort() + "...");
                             clientSocket = serverSocket.accept();
                         } catch (IOException e) {
                             System.err.println("Accept failed.");
@@ -100,7 +100,7 @@ public class HttpServer {
                     + "<html>\n"
                     + "<head>\n"
                     + "<meta charset=\"UTF-8\">\n"
-                    + "<title>Title of the document</title>\n"
+                    + "<title>Base de datos</title>\n"
                     + "</head>\n"
                     + "<body>\n"
                     + "<h1>Mi propio mensaje</h1>\n"
