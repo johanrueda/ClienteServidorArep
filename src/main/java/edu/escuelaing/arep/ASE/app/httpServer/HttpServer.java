@@ -13,14 +13,19 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * @author Johan
+ * Clase HttpServer
+ */
 public class HttpServer {
     private static boolean running;
     private dataBase connect= null;
-    private Map<String,String> request;
-    private int puerto;
-    static PrintWriter printWriter;
+    private Map<String,String> request = new HashMap<>();
 
 
+    /**
+     * Metodo que inicia el HttpServer
+     */
     public  void startServer() {
             try {
                 ServerSocket serverSocket = null;
@@ -54,6 +59,11 @@ public class HttpServer {
             }
         }
 
+    /**
+     * Hace el proceso de las diferentes peticiones que hace el servidor
+     * @param clientSocket socket
+     * @throws IOException error
+     */
     private void processRequest(Socket clientSocket) throws IOException {
         BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
         String inputLine;
@@ -74,6 +84,13 @@ public class HttpServer {
         in.close();
     }
 
+    /**
+     * Responda la peticion de la base de datos
+     * @param req req
+     * @param printWriter print
+     * @param clientSocket socket
+     * @throws IOException error
+     */
     private void createResponse(Request req, PrintWriter printWriter, Socket clientSocket) throws IOException {
         if(req.getRequestURI().startsWith("/dataBase")) {
             String db = "HTTP/1.1 200 OK\r\n"
@@ -97,6 +114,13 @@ public class HttpServer {
         printWriter.close();
     }
 
+    /**
+     * Obtiene los recuersos dependiendo de la peticion
+     * @param requestURI URI
+     * @param printWriter writer
+     * @param clientSocket socket
+     * @throws IOException error
+     */
     private void getStaticResource(String requestURI, PrintWriter printWriter, Socket clientSocket) throws IOException {
         Path file = Paths.get("src/main/resources/" + requestURI);
         String resource = "HTTP/1.1 200 OK\r\n";
@@ -121,14 +145,30 @@ public class HttpServer {
         }
     }
 
+    /**
+     * Obtiene el recurso de las imagenes dependiendo de su extension
+     * @param requestURI URI
+     * @param outputStream OUT
+     */
     private void getImage(String requestURI, OutputStream outputStream) {
-        File file = new File("src/main/resources/" + requestURI);
+        File file = new File("src/main/resources/imagenes/" + requestURI);
+        String path;
         try {
             BufferedImage pic = ImageIO.read(file);
             ByteArrayOutputStream picShow = new ByteArrayOutputStream();
             DataOutputStream picDraw = new DataOutputStream(outputStream);
-            ImageIO.write (pic, "JPG", picShow);
-            picDraw.writeBytes("HTTP/1.1 200 OK\r\n" + "Content-Type: image/jpg \r\n\r\n");
+            if(requestURI.contains(".jpg")){
+                path = "JPG";
+            }
+            else{
+                path = "PNG";
+            }
+            ImageIO.write (pic, path, picShow);
+            if(requestURI.contains(".jpg")) {
+                picDraw.writeBytes("HTTP/1.1 200 OK\r\n" + "Content-Type: image/jpg \r\n\r\n");
+            }else{
+                picDraw.writeBytes("HTTP/1.1 200 OK\r\n" + "Content-Type: image/png \r\n\r\n");
+            }
             picDraw.write(picShow.toByteArray());
         } catch (IOException e) {
             e.printStackTrace();
@@ -136,7 +176,10 @@ public class HttpServer {
     }
 
 
-
+    /**
+     * Obtiene los datos de la base de datos
+     * @return int
+     */
     private String getDataBase() {
         dataBase db = new dataBase();
         ArrayList<String []> data = db.getTable();
@@ -147,6 +190,10 @@ public class HttpServer {
         return list;
     }
 
+    /**
+     * Retorna el puerto
+     * @return int
+     */
     private int getPort() {
         if(System.getenv("PORT") != null){
             return Integer.parseInt(System.getenv("PORT"));

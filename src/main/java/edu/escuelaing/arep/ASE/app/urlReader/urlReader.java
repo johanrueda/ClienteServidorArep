@@ -9,22 +9,27 @@ import java.util.Set;
 
 // Ejercicio 2
 
+/**
+ * @author Johan
+ * clase principal que inicia el proceso para el ejercicio 2
+ */
 
 class URLReader {
 
     /**
-     * Method that read the url
-     * @param args
+     * Meotodo que inicia el proceso de leer la url
+     * @param args args
      */
     public static void main(String[] args) {
-        readURL("http://localhost:36000/otro.do?value=45");
+        readURL("http://localhost:36000/otroarchivoaqui.do?value=56");
     }
 
     /**
-     * Method that does the connection and evaluation of url
-     * @param sitetoread
+     * Metodo que leee la URL
+     * @param sitetoread site
      */
     public static void readURL(String sitetoread) {
+
         try {
             URL siteURL = new URL(sitetoread);
             URLConnection urlConnection = siteURL.openConnection();

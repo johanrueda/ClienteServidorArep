@@ -1,0 +1,25 @@
+-classpath
+'C:/Users/johan/.m2/repository/com/sparkjava/spark-core/2.9.3/spark-core-2.9.3.jar;C:/Users/johan/.m2/repository/org/slf4j/slf4j-api/1.7.25/slf4j-api-1.7.25.jar;C:/Users/johan/.m2/repository/org/eclipse/jetty/jetty-server/9.4.31.v20200723/jetty-server-9.4.31.v20200723.jar;C:/Users/johan/.m2/repository/javax/servlet/javax.servlet-api/3.1.0/javax.servlet-api-3.1.0.jar;C:/Users/johan/.m2/repository/org/eclipse/jetty/jetty-http/9.4.31.v20200723/jetty-http-9.4.31.v20200723.jar;C:/Users/johan/.m2/repository/org/eclipse/jetty/jetty-util/9.4.31.v20200723/jetty-util-9.4.31.v20200723.jar;C:/Users/johan/.m2/repository/org/eclipse/jetty/jetty-io/9.4.31.v20200723/jetty-io-9.4.31.v20200723.jar;C:/Users/johan/.m2/repository/org/eclipse/jetty/jetty-webapp/9.4.31.v20200723/jetty-webapp-9.4.31.v20200723.jar;C:/Users/johan/.m2/repository/org/eclipse/jetty/jetty-xml/9.4.31.v20200723/jetty-xml-9.4.31.v20200723.jar;C:/Users/johan/.m2/repository/org/eclipse/jetty/jetty-servlet/9.4.31.v20200723/jetty-servlet-9.4.31.v20200723.jar;C:/Users/johan/.m2/repository/org/eclipse/jetty/jetty-security/9.4.31.v20200723/jetty-security-9.4.31.v20200723.jar;C:/Users/johan/.m2/repository/org/eclipse/jetty/websocket/websocket-server/9.4.31.v20200723/websocket-server-9.4.31.v20200723.jar;C:/Users/johan/.m2/repository/org/eclipse/jetty/websocket/websocket-common/9.4.31.v20200723/websocket-common-9.4.31.v20200723.jar;C:/Users/johan/.m2/repository/org/eclipse/jetty/websocket/websocket-client/9.4.31.v20200723/websocket-client-9.4.31.v20200723.jar;C:/Users/johan/.m2/repository/org/eclipse/jetty/jetty-client/9.4.31.v20200723/jetty-client-9.4.31.v20200723.jar;C:/Users/johan/.m2/repository/org/eclipse/jetty/websocket/websocket-servlet/9.4.31.v20200723/websocket-servlet-9.4.31.v20200723.jar;C:/Users/johan/.m2/repository/org/eclipse/jetty/websocket/websocket-api/9.4.31.v20200723/websocket-api-9.4.31.v20200723.jar;C:/Users/johan/.m2/repository/org/postgresql/postgresql/42.2.16/postgresql-42.2.16.jar;C:/Users/johan/.m2/repository/commons-io/commons-io/2.1/commons-io-2.1.jar'
+-encoding
+'Cp1252'
+-private
+-sourcepath
+'C:/Users/johan/Desktop/9 Semestre/Arem/nanoSpark/src/main/java'
+-author
+-bottom
+'Copyright &#169; 2021. All rights reserved.'
+-charset
+'UTF-8'
+-d
+'C:/Users/johan/Desktop/9 Semestre/Arem/nanoSpark/javaDoc/apidocs'
+-docencoding
+'UTF-8'
+-doctitle
+'nanoSpark 1.0-SNAPSHOT API'
+-linkoffline
+'https://docs.oracle.com/javase/8/docs/api' 'C:/Users/johan/Desktop/9 Semestre/Arem/nanoSpark/target/javadoc-bundle-options'
+-nohelp
+-use
+-version
+-windowtitle
+'nanoSpark 1.0-SNAPSHOT API'

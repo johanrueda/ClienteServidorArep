@@ -9,16 +9,16 @@ import java.util.logging.Logger;
 
  class urlScanner {
     /**
-     * Scan the url to evaluate
-     * @param args
+     * Metodo que inicia scaneo la URL
+     * @param args args
      */
     public static void main (String [] args){
         scanURL ("https://murmuring-anchorage-59220.herokuapp.com:80/web/index.html");
     }
 
     /**
-     * Parameters to evaluate of url
-     * @param s
+     * Metodo que scanea la URL
+     * @param s url
      */
     private static void scanURL(String s) {
         try {
