@@ -17,17 +17,15 @@ public class HttpServer {
     private static boolean running;
     private dataBase connect= null;
     private Map<String,String> request;
-    private int puerto = 36000;
+    private int puerto;
     static PrintWriter printWriter;
 
 
     public  void startServer() {
             try {
                 ServerSocket serverSocket = null;
-                this.puerto = getPort();
-
                 try {
-                    serverSocket = new ServerSocket(puerto);
+                    serverSocket = new ServerSocket(getPort());
                 } catch (IOException e) {
                     System.err.println("Could not listen on port: " + getPort());
                     System.exit(1);
