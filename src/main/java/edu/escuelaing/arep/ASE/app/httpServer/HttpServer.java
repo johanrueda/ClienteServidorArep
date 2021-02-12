@@ -152,23 +152,13 @@ public class HttpServer {
      */
     private void getImage(String requestURI, OutputStream outputStream) {
         File file = new File("src/main/resources/imagenes/" + requestURI);
-        String path;
+
         try {
             BufferedImage pic = ImageIO.read(file);
             ByteArrayOutputStream picShow = new ByteArrayOutputStream();
             DataOutputStream picDraw = new DataOutputStream(outputStream);
-            if(requestURI.contains(".jpg")){
-                path = "JPG";
-            }
-            else{
-                path = "PNG";
-            }
-            ImageIO.write (pic, path, picShow);
-            if(requestURI.contains(".jpg")) {
-                picDraw.writeBytes("HTTP/1.1 200 OK\r\n" + "Content-Type: image/jpg \r\n\r\n");
-            }else{
-                picDraw.writeBytes("HTTP/1.1 200 OK\r\n" + "Content-Type: image/png \r\n\r\n");
-            }
+            ImageIO.write (pic, "JPG", picShow);
+            picDraw.writeBytes("HTTP/1.1 200 OK\r\n" + "Content-Type: image/jpg \r\n\r\n");
             picDraw.write(picShow.toByteArray());
         } catch (IOException e) {
             e.printStackTrace();
