@@ -17,39 +17,52 @@ public class HttpServer {
     private static boolean running;
     private dataBase connect= null;
     private Map<String,String> request;
-    private int puerto = 0;
+    private int puerto = 36000;
 
-    public  HttpServer(){
+    public HttpServer() {
+        this.puerto = getPort();
+        request = new HashMap<>();
+    }
+
+    public HttpServer(int port) {
+        this.puerto = port;
         request = new HashMap<>();
     }
 
 
 
-
     public  void startServer() throws IOException {
-        ServerSocket serverSocket = null;
         try {
-            serverSocket = new ServerSocket(getPort());
-        } catch (IOException e) {
-            System.err.println("Could not listen on port: 35000.");
-            System.exit(1);
-        }
-        running = true;
-        while (running) {
-            Socket clientSocket = null;
+            ServerSocket serverSocket = null;
+            this.puerto = getPort();
+
             try {
-                System.out.println("Listo para recibir ...");
-                clientSocket = serverSocket.accept();
+                serverSocket = new ServerSocket(getPort());
             } catch (IOException e) {
-                System.err.println("Accept failed.");
+                System.err.println("Could not listen on port: 35000.");
                 System.exit(1);
             }
-            processRequest(clientSocket);
-            clientSocket.close();
+            running = true;
+            while (running) {
+
+                Socket clientSocket = null;
+                try {
+                    System.out.println("Listo para recibir ...");
+                    clientSocket = serverSocket.accept();
+                } catch (IOException e) {
+                    System.err.println("Accept failed.");
+                    System.exit(1);
+                }
+                processRequest(clientSocket);
+                clientSocket.close();
+            }
+            serverSocket.close();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
+
+
     }
-
-
 
     private void processRequest(Socket clientSocket) throws IOException {
         BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
@@ -69,7 +82,6 @@ public class HttpServer {
             createResponse(req, new PrintWriter(clientSocket.getOutputStream(), true), clientSocket);
         }
         in.close();
-
     }
 
     private void createResponse(Request req, PrintWriter printWriter, Socket clientSocket) throws IOException {
@@ -96,7 +108,7 @@ public class HttpServer {
     }
 
     private void getStaticResource(String requestURI, PrintWriter printWriter, Socket clientSocket) throws IOException {
-        Path file = Paths.get("src/main/resources" + requestURI);
+        Path file = Paths.get("src/main/resources/" + requestURI);
         String resource = "HTTP/1.1 200 OK\r\n";
         if (requestURI.contains(".html") || requestURI.equals("/")){
             requestURI = "index.html";
@@ -133,7 +145,9 @@ public class HttpServer {
         }
     }
 
-    public String getDataBase (){
+
+
+    private String getDataBase() {
         dataBase db = new dataBase();
         ArrayList<String []> data = db.getTable();
         String list = "";
@@ -143,10 +157,10 @@ public class HttpServer {
         return list;
     }
 
-    static int getPort(){
+    private int getPort() {
         if(System.getenv("PORT") != null){
             return Integer.parseInt(System.getenv("PORT"));
         }
         return 36000;
     }
-}
+    }
