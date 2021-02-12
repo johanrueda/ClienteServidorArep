@@ -31,38 +31,40 @@ public class HttpServer {
 
 
 
-    public  void startServer() throws IOException {
-        try {
-            ServerSocket serverSocket = null;
-            this.puerto = getPort();
-
+    public  void startServer() {
             try {
-                serverSocket = new ServerSocket(getPort());
-            } catch (IOException e) {
-                System.err.println("Could not listen on port: 35000.");
-                System.exit(1);
-            }
-            running = true;
-            while (running) {
+                ServerSocket serverSocket = null;
+                this.puerto = getPort();
 
-                Socket clientSocket = null;
                 try {
-                    System.out.println("Listo para recibir ...");
-                    clientSocket = serverSocket.accept();
+                    serverSocket = new ServerSocket(puerto);
                 } catch (IOException e) {
-                    System.err.println("Accept failed.");
+                    System.err.println("Could not listen on port: " + getPort());
                     System.exit(1);
                 }
-                processRequest(clientSocket);
-                clientSocket.close();
+
+                running = true;
+                while (running) {
+                    try {
+                        Socket clientSocket = null;
+                        try {
+                            System.out.println("Listo para recibir en puerto 36000 ...");
+                            clientSocket = serverSocket.accept();
+                        } catch (IOException e) {
+                            System.err.println("Accept failed.");
+                            System.exit(1);
+                        }
+                        processRequest(clientSocket);
+                        clientSocket.close();
+                    } catch (IOException ex) {
+                        Logger.getLogger(HttpServer.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+                serverSocket.close();
+            } catch (IOException ex) {
+                Logger.getLogger(HttpServer.class.getName()).log(Level.SEVERE, null, ex);
             }
-            serverSocket.close();
-        } catch (IOException e) {
-            e.printStackTrace();
         }
-
-
-    }
 
     private void processRequest(Socket clientSocket) throws IOException {
         BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
