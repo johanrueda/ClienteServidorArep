@@ -24,10 +24,7 @@ public class HttpServer {
         request = new HashMap<>();
     }
 
-    public HttpServer(int port) {
-        this.puerto = port;
-        request = new HashMap<>();
-    }
+
 
 
 

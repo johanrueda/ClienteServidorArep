@@ -4,7 +4,7 @@ import java.sql.*;
 import java.util.ArrayList;
 
 public class dataBase {
-    private static String url ="jdbc:postgres://ec2-100-24-139-146.compute-1.amazonaws.com:5432/d3iic92vv476ra";
+    private static String url ="jdbc:postgresql://ec2-100-24-139-146.compute-1.amazonaws.com:5432/d3iic92vv476ra";
     private static String user = "jgdjyaphxrrrgv";
     private static String password = "a30be3f4ee4adb660f695bb9a1f91e23cb4e2f271d1b0fddc957f29c2d215729";
     private static Connection connection = null;
@@ -12,6 +12,7 @@ public class dataBase {
     public dataBase(){
         try {
             Class.forName("org.postgresql.Driver");
+            System.out.println("Antes de la conxecion");
             connection = DriverManager.getConnection(url, user, password);
         } catch (ClassNotFoundException c) {
             c.printStackTrace();
