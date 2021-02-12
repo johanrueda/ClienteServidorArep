@@ -21,7 +21,7 @@ class URLReader {
      * @param args args
      */
     public static void main(String[] args) {
-        readURL("http://localhost:36000/otroarchivoaqui.do?value=56");
+        readURL("http://localhost:36000/archivo.do?value=67");
     }
 
     /**
@@ -31,12 +31,23 @@ class URLReader {
     public static void readURL(String sitetoread) {
 
         try {
+            // Crea el objeto que representa una URL2
             URL siteURL = new URL(sitetoread);
+            System.out.println(siteURL);
+            // Crea el objeto que URLConnection
             URLConnection urlConnection = siteURL.openConnection();
+            System.out.println(urlConnection);
+            // Obtiene los campos del encabezado y los almacena en un estructura Map
             Map<String, List<String>> headers = urlConnection.getHeaderFields();
+
+            // Obtiene una vista del mapa como conjunto de pares <K,V>
+            // para poder navegarlo
             Set<Map.Entry<String, List<String>>> entrySet = headers.entrySet();
+            // Recorre la lista de campos e imprime los valores
             for (Map.Entry<String, List<String>> entry : entrySet) {
                 String headerName = entry.getKey();
+
+                //Si el nombre es nulo, significa que es la linea de estado
                 if (headerName != null) {
                     System.out.print(headerName + ":");
                 }
@@ -46,6 +57,7 @@ class URLReader {
                 }
                 System.out.println("");
             }
+
             System.out.println("-------message-body------");
             BufferedReader reader = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
 
@@ -57,4 +69,5 @@ class URLReader {
             System.err.println(x);
         }
     }
-}
+    }
+
